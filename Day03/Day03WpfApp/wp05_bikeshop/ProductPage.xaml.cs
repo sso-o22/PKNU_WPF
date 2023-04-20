@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,22 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using wp05_bikeshop.Logics;
 
-namespace wf02_simplecontrols
+namespace wp05_bikeshop
 {
     /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
+    /// ProductPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProductPage : Page
     {
-        public MainWindow()
+        ProductsFactory factory = new ProductsFactory();
+
+        public ProductPage()
         {
             InitializeComponent();
         }
 
-        private void SldStep_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            PgbStep.Value = (int)SldStep.Value;
+            DgrProducts.ItemsSource = factory.FindProducts(TxtSearch.Text);
         }
     }
 }
