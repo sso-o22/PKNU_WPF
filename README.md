@@ -27,4 +27,7 @@ Windows Presentation Foundation
 	- MVVM 패턴
 	- 데이터바인딩 DB연동
 
+
+4일차 MVVM View
+
 <img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/wpf01.png" width="700">
