@@ -177,6 +177,7 @@
     </Compile>
     <Compile Include="Logics\Commons.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\MainView.xaml.cs">
