@@ -63,5 +63,5 @@ Windows Presentation Foundation
 		
 7일차 영화검색앱 중간
 
-<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/wpf03.gif" width="700">
+<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/wpf04.gif" width="700">
 		
