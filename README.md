@@ -59,9 +59,19 @@ Windows Presentation Foundation
 	- 영화 검색앱
 		- 화면정리
 		- youtube OpenAPI
-		- DB 데이터바인딩
+		- DB 데이터바인딩(SQL Server)
 		
-7일차 영화검색앱 중간
+## 8일차
+- WPF 응용
+	- 영화검색앱 완료
+		- DB 데이터바인딩(MySQL)
+	- 미세먼지확인 앱 개발
+		- MahApps.Metro
+		- 데이터포털 OpenAPI
+		- DB 데이터바인딩(MySQL)
+		
+		
+영화검색앱
 
 <img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/wpf04.gif" width="700">
 		
