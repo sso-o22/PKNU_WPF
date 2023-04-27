@@ -69,8 +69,8 @@ Windows Presentation Foundation
 		- MahApps.Metro
 		- 데이터포털 OpenAPI
 		- DB 데이터바인딩(MySQL)
-		
-		
+
+	
 영화검색앱
 
 <img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/wpf04.gif" width="700">

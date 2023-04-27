@@ -74,7 +74,7 @@ namespace wp11_MovieFinder
         // 실제 검색 메서드
         private async void SearchMovie(string movieName)
         {
-            string tmdb_apiKey = "d7ba497a8b12d430bc81e3393d66460d";
+            string tmdb_apiKey = "tmdb키";
             string encoding_movieName = HttpUtility.UrlEncode(movieName, Encoding.UTF8);
             string openApiUri = $@"https://api.themoviedb.org/3/search/movie?api_key={tmdb_apiKey}&language=ko-KR&page=1&include_adult=false&query={encoding_movieName}";  // 검색 URL
             string result = string.Empty;  // 결과값
