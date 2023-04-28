@@ -12,15 +12,15 @@
         FontFamily="NanumGothic">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="128*"/>
+            <ColumnDefinition Width="67*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="166*"/>
-            <RowDefinition Height="163*"/>
-            <RowDefinition Height="55*"/>
+            <RowDefinition Height="119*"/>
+            <RowDefinition Height="206*"/>
+            <RowDefinition Height="54*"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
@@ -58,11 +58,13 @@
         <!--- 데이터 그리드 영역 -->
         <DataGrid Grid.Row="1" Grid.Column="0" x:Name="GrdResult" Margin="5,5,5,5" 
                   IsReadOnly="True" Style="{StaticResource MahApps.Styles.DataGrid.Azure}"
-                  ItemsSource="{Binding}" AutoGenerateColumns="False" Grid.RowSpan="3">
+                  ItemsSource="{Binding}" MouseDoubleClick="GrdResult_MouseDoubleClick"
+                  SelectedCellsChanged="GrdResult_SelectedCellsChanged" AutoGenerateColumns="False" Grid.RowSpan="3">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}" Header="제목" FontWeight="Bold" />
-                <DataGridTextColumn Binding="{Binding SubTitle}" Header="부제목" FontWeight="Bold" />
-                <DataGridTextColumn Binding="{Binding Place}" Header="장소" FontWeight="Bold" />
+                <DataGridTextColumn Binding="{Binding Homepage_Url}" Header="링크" FontWeight="Bold" />
+                <DataGridTextColumn Binding="{Binding Gugun_Nm}" Header="구군" FontWeight="Bold" />
+                <DataGridTextColumn Binding="{Binding Addr1}" Header="주소" FontWeight="Bold" />
                 <DataGridTextColumn Binding="{Binding Usage_Day_Week_And_Time}" Header="기간" FontWeight="Bold" />
                 <DataGridTextColumn Binding="{Binding Usage_Amount}" Header="이용요금" FontWeight="Bold" />
             </DataGrid.Columns>
@@ -70,7 +72,7 @@
 
         <!--- 축제 상세 정보 영역 -->
         <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" >
-            <GroupBox Header="지도" Margin="10"
+            <GroupBox Header="사진" Margin="10"
                       mah:HeaderedControlHelper.HeaderFontSize="14"
                       mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Center"
                       mah:HeaderedControlHelper.HeaderFontFamily="NanumGothic"
@@ -79,7 +81,7 @@
             </GroupBox>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Margin="0,151,0,0" >
+        <Grid Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Margin="0,0,0,0" >
             <GroupBox Header="교통편" Margin="10"
                       mah:HeaderedControlHelper.HeaderFontSize="14"
                       mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Center"
@@ -90,7 +92,7 @@
 
 
         <!-- 상태 표시줄 -->
-        <StatusBar Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,55,0,0" Grid.RowSpan="2">
+        <StatusBar Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,1,0,0">
             <StatusBarItem Content="부산시 축제검색앱" />
             <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar}" />
             <StatusBarItem x:Name="StsResult" />

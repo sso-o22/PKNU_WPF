@@ -38,7 +38,7 @@ namespace wp13_FestivalSearch
         private async void BtnSearchFstiv_Click(object sender, RoutedEventArgs e)
         {
             string apiKey = "hoTBwQLPqblAry8FHGON1eWrxGhlTnfaVQ8U2GxfjrF7jx01qHlVXtBts1GfhsXTphn4yrYM6eeCX3iB7aq0dQ%3D%3D";
-            string openApiUri = $"https://apis.data.go.kr/6260000/FestivalService/getFestivalKr?serviceKey={apiKey}&pageNo=1&numOfRows=10&resultType=json";
+            string openApiUri = $"https://apis.data.go.kr/6260000/FestivalService/getFestivalKr?serviceKey={apiKey}&pageNo=1&numOfRows=30&resultType=json";
             string result = string.Empty;  // 결과값
 
             // API 실행할 객체
@@ -209,5 +209,42 @@ namespace wp13_FestivalSearch
             }
         }
 
+        private void GrdResult_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selItem = GrdResult.SelectedItem as Festival;
+
+            var mapWindow = new LinkWindow(selItem.Homepage_Url);  // 부모창 위치값을 자식창으로 전달
+            mapWindow.Owner = this;  // MainWindow 부모
+            mapWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;  // 부모창 중간에 출력
+            mapWindow.ShowDialog();
+        }
+
+        private async void GrdResult_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            try
+            {
+                string posterpath = string.Empty;
+
+                if (GrdResult.SelectedItem is Festival)  // openAPI로 검색된 영화의 포스터
+                {
+                    var item = GrdResult.SelectedItem as Festival;
+                    posterpath = item.Main_Img_Normal;
+                }
+
+                Debug.WriteLine(posterpath);
+                if (string.IsNullOrEmpty(posterpath))  // 포스터 이미지가 없으면 No_Picture
+                {
+                    ImgPoster.Source = new BitmapImage(new Uri("/No_Picture.png", UriKind.RelativeOrAbsolute));
+                }
+                else  // 포스터 이미지 경로가 있으면
+                {
+                    ImgPoster.Source = new BitmapImage(new Uri($"{posterpath}", UriKind.RelativeOrAbsolute));
+                }
+            }
+            catch
+            {
+                await Commons.ShowMessageAsync("오류", $"이미지로드 오류발생");
+            }
+        }
     }
 }
