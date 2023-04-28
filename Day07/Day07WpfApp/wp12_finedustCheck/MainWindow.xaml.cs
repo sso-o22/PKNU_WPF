@@ -44,7 +44,7 @@ namespace wp12_finedustCheck
             WebRequest req = null;
             WebResponse res = null;
             StreamReader reader = null;
-            
+
             try
             {
                 req = WebRequest.Create(openApiUri);
@@ -87,7 +87,7 @@ namespace wp12_finedustCheck
                             Timestamp = Convert.ToDateTime(sensor["timestamp"]),
                             Company_id = Convert.ToString(sensor["company_id"]),
                             Company_name = Convert.ToString(sensor["company_name"])
-                        });                
+                        });
                     }
                     this.DataContext = dustSensors;  // 데이터 넘어오는지 확인
                     StsResult.Content = $"OpenAPI {dustSensors.Count}건 조회완료";
@@ -175,23 +175,79 @@ namespace wp12_finedustCheck
                 await Commons.ShowMessageAsync("오류", $"DB 저장 오류 {ex.Message}");
             }
         }
-        
+
         // DB(MySQL)에서 조회해서 리스트 뿌리기
         private void CboReqDate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (CboReqDate.SelectedValue != null)
+            {
+                // MessageBox.Show(CboReqDate.SelectedValue.ToString());
+                using (MySqlConnection conn = new MySqlConnection(Commons.myConnString))
+                {
+                    conn.Open();
+                    var query = @"SELECT Id,
+                                         Dev_id,
+                                         Name,
+                                         Loc,
+                                         Coordx,
+                                         Coordy,
+                                         Ison,
+                                         Pm10_after,
+                                         Pm25_after,
+                                         State,
+                                         Timestamp,
+                                         Company_id,
+                                         Company_name
+                                    FROM dustsensor
+                                   WHERE date_format(Timestamp, '%Y-%m-%d') = @Timestamp";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Timestamp", CboReqDate.SelectedValue.ToString());
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    DataSet ds = new DataSet();
+                    adapter.Fill(ds, "dustsensor");
+                    List<DustSensor> dustSensors = new List<DustSensor>();
+                    foreach (DataRow row in ds.Tables["dustsensor"].Rows)
+                    {
+                        dustSensors.Add(new DustSensor
+                        {
+                            Id = Convert.ToInt32(row["Id"]),  // mysql 컬럼이름에 대소문자 구분없이 쓰기 때문에
+                            Dev_id = Convert.ToString(row["Dev_id"]),
+                            Name = Convert.ToString(row["Name"]),
+                            Loc = Convert.ToString(row["Loc"]),
+                            Coordx = Convert.ToDouble(row["Coordx"]),
+                            Coordy = Convert.ToDouble(row["Coordy"]),
+                            Ison = Convert.ToBoolean(row["Ison"]),
+                            Pm10_after = Convert.ToInt32(row["Pm10_after"]),
+                            Pm25_after = Convert.ToInt32(row["Pm25_after"]),
+                            State = Convert.ToInt32(row["State"]),
+                            Timestamp = Convert.ToDateTime(row["Timestamp"]),
+                            Company_id = Convert.ToString(row["Company_id"]),
+                            Company_name = Convert.ToString(row["Company_name"])
+                        });
+                    }
 
+                    this.DataContext = dustSensors;
+                    StsResult.Content = $"OpenAPI {dustSensors.Count}건 조회완료";
+                }
+            }
+            else
+            {
+                this.DataContext = null;
+                StsResult.Content = $"DB조회 클리어";
+            }
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // 콤보박스에 들어갈 날짜를 DB에서 불러옴
+            // 콤보박스에 들어갈 날짜를 DB에서 불러와
+            // 저장한 뒤에도 콤보박스 재조회해야 날짜가 전부 출력
             using (MySqlConnection conn = new MySqlConnection(Commons.myConnString))
             {
                 conn.Open();
                 var query = @"SELECT DATE_FORMAT(Timestamp, '%Y-%m-%d') AS Save_Date
-                                FROM dustsensor
-                               GROUP BY 1
-                               ORDER BY 1";
+                                  FROM dustsensor
+                                 GROUP BY 1
+                                 ORDER BY 1";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -201,9 +257,19 @@ namespace wp12_finedustCheck
                 {
                     saveDateList.Add(Convert.ToString(row["Save_Date"]));
                 }
-
                 CboReqDate.ItemsSource = saveDateList;
             }
+        }
+
+        // 그리드의 특정 Row를 더블클릭해서 새창에 센서위치 출력
+        private void GrdResult_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selItem = GrdResult.SelectedItem as DustSensor;
+
+            var mapWindow = new MapWindow(selItem.Coordy, selItem.Coordx);  // 부모창 위치값을 자식창으로 전달
+            mapWindow.Owner = this;  // MainWindow 부모
+            mapWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;  // 부모창 중간에 출력
+            mapWindow.ShowDialog();
         }
     }
 }
