@@ -241,6 +241,9 @@
   <ItemGroup>
     <Resource Include="No_Picture.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Dynamic_Busan.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

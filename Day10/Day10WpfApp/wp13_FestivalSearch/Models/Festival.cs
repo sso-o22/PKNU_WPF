@@ -52,8 +52,6 @@ namespace wp13_FestivalSearch.Models
         public string Main_Img_Normal { get; set; }
         public string Main_Img_Thumb { get; set; }
         public string Itemcntnts { get; set; }
-
-
-
+        public string Middle_Size_Rm1 { get; set; }
     }
 }

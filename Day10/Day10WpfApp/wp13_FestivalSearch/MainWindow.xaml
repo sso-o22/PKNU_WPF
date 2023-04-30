@@ -31,22 +31,29 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" >
-                <TextBox Grid.Column="0" Width="210" x:Name="TxtFstivName" FontSize="14" Margin="5,10"
-                         mah:TextBoxHelper.Watermark="검색할 축제명 키워드 입력"
-                         mah:TextBoxHelper.UseFloatingWatermark="True"
-                         mah:TextBoxHelper.ClearTextButton="True"
-                         InputMethod.PreferredImeState="On"
-                         InputMethod.PreferredImeConversionMode="Native" />
-                <ComboBox x:Name="CboRegion" Width="150" Margin="5,10" Style="{StaticResource MahApps.Styles.ComboBox}" 
+                <Image Source="Dynamic_Busan.jpg" Width="120" Height="40" />
+
+                <ComboBox x:Name="CboRegion" Width="200" Margin="5,10" Style="{StaticResource MahApps.Styles.ComboBox}" 
                           mah:TextBoxHelper.Watermark="구군 선택" 
                           mah:TextBoxHelper.UseFloatingWatermark="True"
                           mah:TextBoxHelper.ClearTextButton="True" />
                 <Button Grid.Column="1" x:Name="BtnSearchFstiv" FontSize="14" Margin="5,10" 
-                    Content="검색" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnSearchFstiv_Click">
+                    Content="조회" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnSearchFstiv_Click">
                     <Button.ContentTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <iconpacks:PackIconModern Kind="Magnify" Margin="5" />
+                                <TextBlock Text="{Binding}" Margin="5" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </Button.ContentTemplate>
+                </Button>
+                <Button Grid.Column="1" x:Name="BtnSaveFstiv" FontSize="14" Margin="5,10" 
+                    Content="저장" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnSaveFstiv_Click">
+                    <Button.ContentTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <iconpacks:PackIconModern Kind="Save" Margin="5" />
                                 <TextBlock Text="{Binding}" Margin="5" />
                             </StackPanel>
                         </DataTemplate>
@@ -62,11 +69,12 @@
                   SelectedCellsChanged="GrdResult_SelectedCellsChanged" AutoGenerateColumns="False" Grid.RowSpan="3">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}" Header="제목" FontWeight="Bold" />
-                <DataGridTextColumn Binding="{Binding Homepage_Url}" Header="링크" FontWeight="Bold" />
-                <DataGridTextColumn Binding="{Binding Gugun_Nm}" Header="구군" FontWeight="Bold" />
+                <DataGridTextColumn Binding="{Binding Place}" Header="장소" FontWeight="Bold" />
                 <DataGridTextColumn Binding="{Binding Addr1}" Header="주소" FontWeight="Bold" />
                 <DataGridTextColumn Binding="{Binding Usage_Day_Week_And_Time}" Header="기간" FontWeight="Bold" />
                 <DataGridTextColumn Binding="{Binding Usage_Amount}" Header="이용요금" FontWeight="Bold" />
+                <DataGridTextColumn Binding="{Binding Cntct_Tel}" Header="연락처" FontWeight="Bold" />
+                <DataGridTextColumn Binding="{Binding Middle_Size_Rm1}" Header="편의시설" FontWeight="Bold" />
             </DataGrid.Columns>
         </DataGrid>
 
@@ -87,6 +95,7 @@
                       mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Center"
                       mah:HeaderedControlHelper.HeaderFontFamily="NanumGothic"
                       mah:HeaderedControlHelper.HeaderFontWeight="Bold" >
+                <TextBlock Text="{Binding Trfc_Info}" />
             </GroupBox>
         </Grid>
 

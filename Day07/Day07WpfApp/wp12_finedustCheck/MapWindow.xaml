@@ -11,6 +11,5 @@
     Title="MapWindow" Height="350" Width="600">
     <Grid Margin="20">
         <cefsharp:ChromiumWebBrowser x:Name="BrsLocSensor" Address="https://map.google.com" />
-
     </Grid>
 </mah:MetroWindow>

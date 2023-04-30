@@ -38,7 +38,7 @@ namespace wp13_FestivalSearch
         private async void BtnSearchFstiv_Click(object sender, RoutedEventArgs e)
         {
             string apiKey = "hoTBwQLPqblAry8FHGON1eWrxGhlTnfaVQ8U2GxfjrF7jx01qHlVXtBts1GfhsXTphn4yrYM6eeCX3iB7aq0dQ%3D%3D";
-            string openApiUri = $"https://apis.data.go.kr/6260000/FestivalService/getFestivalKr?serviceKey={apiKey}&pageNo=1&numOfRows=30&resultType=json";
+            string openApiUri = $"https://apis.data.go.kr/6260000/FestivalService/getFestivalKr?serviceKey={apiKey}&pageNo=1&numOfRows=32&resultType=json";
             string result = string.Empty;  // 결과값
 
             // API 실행할 객체
@@ -95,7 +95,8 @@ namespace wp13_FestivalSearch
                             Usage_Amount = Convert.ToString(val["USAGE_AMOUNT"]),
                             Main_Img_Normal = Convert.ToString(val["MAIN_IMG_NORMAL"]),
                             Main_Img_Thumb = Convert.ToString(val["MAIN_IMG_THUMB"]),
-                            Itemcntnts = Convert.ToString(val["ITEMCNTNTS"])
+                            Itemcntnts = Convert.ToString(val["ITEMCNTNTS"]),
+                            Middle_Size_Rm1 = Convert.ToString(val["MIDDLE_SIZE_RM1"])    
                         });
                     }
                     this.DataContext = festivals;  // 데이터 넘어오는지 확인
@@ -109,7 +110,7 @@ namespace wp13_FestivalSearch
         }
 
         // 검색한 결과 DB(MySQL)에 저장
-        private async void BtnSaveData_Click(object sender, RoutedEventArgs e)
+        private async void BtnSaveFstiv_Click(object sender, RoutedEventArgs e)
         {
             if (GrdResult.Items.Count == 0)
             {
@@ -143,7 +144,8 @@ namespace wp13_FestivalSearch
                                             Usage_Amount,
                                             Main_Img_Normal,
                                             Main_Img_Thumb,
-                                            Itemcntnts)
+                                            Itemcntnts,
+                                            Middle_Size_Rm1)
                                             VALUES
                                             (@Uc_Seq,
                                             @Main_Title,
@@ -164,7 +166,8 @@ namespace wp13_FestivalSearch
                                             @Usage_Amount,
                                             @Main_Img_Normal,
                                             @Main_Img_Thumb,
-                                            @Itemcntnts)";
+                                            @Itemcntnts,
+                                            @Middle_Size_Rm1)";
                     var insRes = 0;
                     foreach (var temp in GrdResult.Items)
                     {
@@ -193,6 +196,7 @@ namespace wp13_FestivalSearch
                             cmd.Parameters.AddWithValue("@Main_Img_Normal", item.Main_Img_Normal);
                             cmd.Parameters.AddWithValue("@Main_Img_Thumb", item.Main_Img_Thumb);
                             cmd.Parameters.AddWithValue("@Itemcntnts", item.Itemcntnts);
+                            cmd.Parameters.AddWithValue("@Middle_Size_Rm1", item.Middle_Size_Rm1);
 
                             insRes += cmd.ExecuteNonQuery();
                         }
@@ -209,6 +213,7 @@ namespace wp13_FestivalSearch
             }
         }
 
+        // 더블 클릭하면 축제 링크 새창으로 열기
         private void GrdResult_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selItem = GrdResult.SelectedItem as Festival;
@@ -219,26 +224,27 @@ namespace wp13_FestivalSearch
             mapWindow.ShowDialog();
         }
 
+        // 셀 클릭하면 이미지, 교통편 or 지도(위도, 경도로) 띄우기
         private async void GrdResult_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             try
             {
-                string posterpath = string.Empty;
+                string imagepath = string.Empty;
 
-                if (GrdResult.SelectedItem is Festival)  // openAPI로 검색된 영화의 포스터
+                if (GrdResult.SelectedItem is Festival)  // openAPI로 검색된 축제의 사진
                 {
                     var item = GrdResult.SelectedItem as Festival;
-                    posterpath = item.Main_Img_Normal;
+                    imagepath = item.Main_Img_Normal;
                 }
 
-                Debug.WriteLine(posterpath);
-                if (string.IsNullOrEmpty(posterpath))  // 포스터 이미지가 없으면 No_Picture
+                Debug.WriteLine(imagepath);
+                if (string.IsNullOrEmpty(imagepath))  // 이미지가 없으면 No_Picture
                 {
                     ImgPoster.Source = new BitmapImage(new Uri("/No_Picture.png", UriKind.RelativeOrAbsolute));
                 }
-                else  // 포스터 이미지 경로가 있으면
+                else  // 이미지 경로가 있으면
                 {
-                    ImgPoster.Source = new BitmapImage(new Uri($"{posterpath}", UriKind.RelativeOrAbsolute));
+                    ImgPoster.Source = new BitmapImage(new Uri($"{imagepath}", UriKind.RelativeOrAbsolute));
                 }
             }
             catch
