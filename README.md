@@ -73,7 +73,7 @@ Windows Presentation Foundation
 	
 영화검색앱
 
-<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/wpf04.gif" width="700">
+<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/wpf04.gif">
 
 
 미세먼지확인 앱 중간
