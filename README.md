@@ -94,3 +94,32 @@ Windows Presentation Foundation
 9일차 미세먼지확인 앱 완료
 
 <img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/wpf06.png" width="700">
+
+
+## 10일차
+- 코딩 테스트 (개인 포트폴리오)
+	- 부산시 축제 검색앱
+		- MahApps.Metro
+		- 데이터포털 OpenAPI
+		- DB 데이터바인딩(MySQL)
+		
+10일차 부산시 축제 검색앱 완료
+		
+<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/fstv01.png" width="700">
+초기화면
+
+<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/fstv02.png" width="700">
+전체조회 버튼 클릭
+
+<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/fstv03.png" width="700">
+구군 선택
+
+<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/fstv04.png" width="700">
+축제 선택시 해당 사진과 대중교통 표시
+
+<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/fstv05.png" width="700">
+축제 선택 후 길찾기 버튼 클릭시 새창으로 구글맵 접속
+
+<img src="https://raw.githubusercontent.com/sso-o22/PKNU_WPF/main/Images/fstv06.png" width="700">
+축제 선택 후 홈페이지 버튼 클릭시 새창으로 해당 축제 홈페이지 접속
+
