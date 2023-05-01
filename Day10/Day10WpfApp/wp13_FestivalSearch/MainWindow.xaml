@@ -8,8 +8,8 @@
     xmlns:iconpacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:wp13_FestivalSearch"
     mc:Ignorable="d"
-    Title="Busan Festival" Height="500" Width="800" MinHeight="500" MinWidth="800"
-        FontFamily="NanumGothic">
+    Title="Busan Festival" Height="500" Width="800" MaxHeight="500" MaxWidth="800"
+        FontFamily="NanumGothic" Loaded="MetroWindow_Loaded">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="128*"/>
@@ -19,8 +19,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="119*"/>
-            <RowDefinition Height="206*"/>
-            <RowDefinition Height="54*"/>
+            <RowDefinition Height="168*"/>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="21*"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
@@ -33,12 +34,12 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" >
                 <Image Source="Dynamic_Busan.jpg" Width="120" Height="40" />
 
-                <ComboBox x:Name="CboRegion" Width="200" Margin="5,10" Style="{StaticResource MahApps.Styles.ComboBox}" 
+                <ComboBox x:Name="CboRegion" Width="180" Margin="5,10" Style="{StaticResource MahApps.Styles.ComboBox}" 
                           mah:TextBoxHelper.Watermark="구군 선택" 
                           mah:TextBoxHelper.UseFloatingWatermark="True"
-                          mah:TextBoxHelper.ClearTextButton="True" />
+                          mah:TextBoxHelper.ClearTextButton="True" SelectionChanged="CboRegion_SelectionChanged" />
                 <Button Grid.Column="1" x:Name="BtnSearchFstiv" FontSize="14" Margin="5,10" 
-                    Content="조회" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnSearchFstiv_Click">
+                    Content="전체 조회" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnSearchFstiv_Click">
                     <Button.ContentTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -64,9 +65,8 @@
 
         <!--- 데이터 그리드 영역 -->
         <DataGrid Grid.Row="1" Grid.Column="0" x:Name="GrdResult" Margin="5,5,5,5" 
-                  IsReadOnly="True" Style="{StaticResource MahApps.Styles.DataGrid.Azure}"
-                  ItemsSource="{Binding}" MouseDoubleClick="GrdResult_MouseDoubleClick"
-                  SelectedCellsChanged="GrdResult_SelectedCellsChanged" AutoGenerateColumns="False" Grid.RowSpan="3">
+                  IsReadOnly="True" Style="{StaticResource MahApps.Styles.DataGrid.Azure}" ItemsSource="{Binding}"
+                  SelectedCellsChanged="GrdResult_SelectedCellsChanged" AutoGenerateColumns="False" Grid.RowSpan="4">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}" Header="제목" FontWeight="Bold" />
                 <DataGridTextColumn Binding="{Binding Place}" Header="장소" FontWeight="Bold" />
@@ -79,7 +79,7 @@
         </DataGrid>
 
         <!--- 축제 상세 정보 영역 -->
-        <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" >
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="510,0,0,0" >
             <GroupBox Header="사진" Margin="10"
                       mah:HeaderedControlHelper.HeaderFontSize="14"
                       mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Center"
@@ -89,19 +89,33 @@
             </GroupBox>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Margin="0,0,0,0" >
-            <GroupBox Header="교통편" Margin="10"
-                      mah:HeaderedControlHelper.HeaderFontSize="14"
-                      mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Center"
-                      mah:HeaderedControlHelper.HeaderFontFamily="NanumGothic"
-                      mah:HeaderedControlHelper.HeaderFontWeight="Bold" >
-                <TextBlock Text="{Binding Trfc_Info}" />
-            </GroupBox>
+        <Grid Grid.Row="1" Grid.RowSpan="4" Margin="510,120,0,0" Grid.ColumnSpan="2" >
+            <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden" Margin="0,0,0,104">
+                <GroupBox Header="대중교통" Margin="10" ScrollViewer.CanContentScroll="True"
+                    mah:HeaderedControlHelper.HeaderFontSize="14"
+                    mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Center"
+                    mah:HeaderedControlHelper.HeaderFontFamily="NanumGothic"
+                    mah:HeaderedControlHelper.HeaderFontWeight="Bold" >
+                    <TextBlock x:Name="TxtTrfcInfo" Text="{Binding Trfc_Info}" />
+                </GroupBox>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="568,168,0,0" Grid.RowSpan="2" >
+            <StackPanel Orientation="Horizontal">
+                <Button Grid.Column="2" x:Name="BtnMap" FontSize="14" Margin="5,5" Width="70"
+                    Content="길찾기" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnMap_Click">
+                </Button>
+
+                <Button Grid.Column="2" x:Name="BtnLink" FontSize="14" Margin="5,5" Width="70"
+                    Content="홈페이지" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Click="BtnLink_Click" >
+                </Button>
+            </StackPanel>
         </Grid>
 
 
         <!-- 상태 표시줄 -->
-        <StatusBar Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,1,0,0">
+        <StatusBar Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,1,0,0">
             <StatusBarItem Content="부산시 축제검색앱" />
             <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar}" />
             <StatusBarItem x:Name="StsResult" />
