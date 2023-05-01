@@ -217,7 +217,7 @@ namespace wp13_FestivalSearch
         }
 
 
-        // 셀 클릭하면 이미지, 교통편 or 지도(위도, 경도로) 띄우기
+        // 셀 클릭하면 이미지, 교통편 띄우기
         private async void GrdResult_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             try
@@ -232,7 +232,7 @@ namespace wp13_FestivalSearch
                     txttrfc = item.Trfc_Info;
                 }
 
-                Debug.WriteLine(imagepath);
+                //Debug.WriteLine(imagepath);
                 if (string.IsNullOrEmpty(imagepath))  // 이미지가 없으면 No_Picture, 교통정보 없으면 비우기
                 {
                     ImgPoster.Source = new BitmapImage(new Uri("/No_Picture.png", UriKind.RelativeOrAbsolute));
